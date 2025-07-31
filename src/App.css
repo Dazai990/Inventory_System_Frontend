@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+/*  Text styles    */
+
+.dual-tone-box {
+   background: linear-gradient(45deg, #eeecec, #000000);
+  border: none;
+}
