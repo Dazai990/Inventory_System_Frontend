@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "dist"  # For Vite
+  publish = "build"  # For Vite
   # publish = "build"  # For Create React App
 
 [[redirects]]
