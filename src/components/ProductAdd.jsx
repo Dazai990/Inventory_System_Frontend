@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PRODUCT_API_BASE_URL } from "./ProductView";
 const ProductAdd = ()=>{
   const [product,setProduct] = useState({
@@ -6,6 +7,9 @@ const ProductAdd = ()=>{
     brand:'',
     price:''
   })
+
+  const navigate = useNavigate();
+
 
   //to add product by calling backend rest api
   const addProduct = (base_url,product)=>{
@@ -24,24 +28,19 @@ const ProductAdd = ()=>{
      .then(response=>{
       if(response.ok)
         return response.json()
-      else if(response.status==="404")
-        return response.json()
-        else 
-      throw Error(`server Error: ${response.statusText}`)
+        else throw Error(`server Error: ${response.statusText}`)
      })
-     .then(data=>alert(data.message))
-     .catch(err=>console.error(err))
-
-  }
+     .then(data=>{
+      alert(data.message);
+        setProduct({ name:'', brand:'', price:''});
+        navigate('/');
+     })
+     .catch(err=>console.error(err));
+  };
 
   const handleSubmit = (e)=>{
     e.preventDefault();
-    addProduct(PRODUCT_API_BASE_URL,product)
-    setProduct({
-      name:'',
-      brand:'',
-      price:''
-    })
+    addProduct(PRODUCT_API_BASE_URL,product);
   }
 
   return(
@@ -50,15 +49,15 @@ const ProductAdd = ()=>{
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label style={{fontFamily:'monospace'}} className="form-label" for='nm'>Product Name</label>
-                <input className="form-control" id="nm" value={product.name} onChange={e=>setProduct({...product,name:e.target.value})}/>  
+                <input className="form-control" id="nm" value={product.name} onChange={e=>setProduct({...product,name:e.target.value})} style={{textTransform:'capitalize'}} required/>  
             </div>
             <div className="mb-3">
             <label style={{fontFamily:'monospace'}} className="form-label" for='br'>Product Brand</label>
-            <input className="form-control" id="br" value={product.brand} onChange={e=>setProduct({...product,brand:e.target.value})}/>
+            <input className="form-control" id="br" value={product.brand} onChange={e=>setProduct({...product,brand:e.target.value})} style={{textTransform:'capitalize'}} required/>
             </div>
             <div className="mb-3">
             <label style={{fontFamily:'monospace'}} className="form-label" for='br'>Product Price</label>
-            <input type="number" className="form-control" id="br" value={product.price} onChange={e=>setProduct({...product,price:e.target.value})}/>
+            <input type="number" className="form-control" id="br" value={product.price} onChange={e=>setProduct({...product,price:e.target.value})} required/>
             </div>
             <div className="d-flex justify-content-center gap-2">
                 <button className="btn btn-success" type="submit">Save</button>

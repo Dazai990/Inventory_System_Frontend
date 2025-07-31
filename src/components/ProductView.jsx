@@ -147,7 +147,7 @@ const ProductView = () =>{
                         <tr key={p._id}>
                         <td>{p.name}</td>
                         <td>{p.brand}</td>
-                        <td>{p.price}</td>
+                        <td>&#8377;{p.price}</td>
                         <td><button title="Edit" className="btn btn-warning" onClick={()=>handleEdit(p)}><MdEdit /></button></td>
                         <td><button title="Delete" className="btn btn-danger" onClick={()=>handleDelete(p)}><MdDelete /></button></td>
                     </tr>)}
